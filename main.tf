@@ -30,10 +30,25 @@ resource "azurerm_network_security_group" "main" {
   location            = azurerm_resource_group.main.location
   resource_group_name = azurerm_resource_group.main.name
 
+  # Deny Inbound Traffic from the Internet
+  security_rule {
+    name                       = "DenyInternetInBound"
+    description                = "Deny all inbound traffic from the Internet"
+    priority                   = 100
+    direction                  = "Inbound"
+    access                     = "Deny"
+    protocol                   = "*"
+    source_port_range          = "*"
+    destination_port_range     = "*"
+    source_address_prefix      = "Internet"
+    destination_address_prefix = "*"
+  }
+
+  # Allow traffic within the Same Virtual Network
   security_rule {
     name                       = "AllowVnetInBound"
-    description                = "Allow access to other VMs on the subnet"
-    priority                   = 101
+    description                = "Allow inbound traffic within the same Virtual Network"
+    priority                   = 200
     direction                  = "Inbound"
     access                     = "Allow"
     protocol                   = "*"
@@ -43,17 +58,32 @@ resource "azurerm_network_security_group" "main" {
     destination_address_prefix = "VirtualNetwork"
   }
 
+  # Allow traffic within the Same Virtual Network (Outbound)
   security_rule {
-    name                       = "DenyInternetInBound"
-    description                = "Deny all inbound traffic outside of the vnet from the Internet"
-    priority                   = 100
-    direction                  = "Inbound"
-    access                     = "Deny"
+    name                       = "AllowVnetOutBound"
+    description                = "Allow outbound traffic within the same Virtual Network"
+    priority                   = 300
+    direction                  = "Outbound"
+    access                     = "Allow"
     protocol                   = "*"
     source_port_range          = "*"
     destination_port_range     = "*"
-    source_address_prefix      = "Internet"
+    source_address_prefix      = "VirtualNetwork"
     destination_address_prefix = "VirtualNetwork"
+  }
+
+  # Allow HTTP Traffic from the Load Balancer to the VMs
+  security_rule {
+    name                       = "AllowHttpFromLoadBalancer"
+    description                = "Allow HTTP traffic from the Load Balancer to the VMs"
+    priority                   = 400
+    direction                  = "Inbound"
+    access                     = "Allow"
+    protocol                   = "Tcp"
+    source_port_range          = "*"
+    destination_port_range     = "80"
+    source_address_prefix      = "*"
+    destination_address_prefix = "*"
   }
 
   tags = {

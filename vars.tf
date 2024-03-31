@@ -31,7 +31,11 @@ variable "server_names"{
 variable "number_of_vms" {
   description = "The number of Virtual Machines to be deployed."
   type        = number
-  default     = "2"
+  default     = 2
+  validation {
+    condition     = var.number_of_vms >= 2 && var.number_of_vms <= 5
+    error_message = "The number of VMs must be at least 2 and no more than 5."
+  }
 }
 
 variable "packer_image" {

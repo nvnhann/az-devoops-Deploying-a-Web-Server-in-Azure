@@ -1,7 +1,9 @@
 # Azure Infrastructure Operations Project: Deploying a scalable IaaS web server in Azure
 
 **Author**: Nhan V. Nguyen
+
 **Course**: Cloud DevOps using Microsoft Azure
+
 **Date udpate**: 31/03/2024
 
 ### Introduction

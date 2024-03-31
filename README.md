@@ -115,7 +115,7 @@ By providing the -o flag followed by a file name, you can save the execution pla
 Here's the command you would use:
 
 ```shell
-terraform plan -out=terraform.plan
+terraform plan -out terraform.plan
 ```
 
 ![terraform_plan](./screenshots/terraform-plan.png)

@@ -127,7 +127,7 @@ The ```terraform apply``` command in Terraform is used to apply the changes desc
 
 After deploying the infrastructure, you can visit the Azure portal to verify the provisioned resources. Once you're done, ensure to properly destroy these resources to avoid incurring unnecessary costs.
 
-`terraform destroy```
+`terraform destroy`
 
 ![terraform_destroy](./screenshots/terraform_destroy.png)
 
